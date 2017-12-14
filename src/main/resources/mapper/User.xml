@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mywechatem.demo.dao.UserDao">
+    <resultMap id="userInfo" type="mywechatem.demo.domain.User">
+    </resultMap>
+    <!--添加一个用户-->
+    <insert id="insertUser" parameterType="mywechatem.demo.domain.User">
+        INSERT into tb_user
+        (id,password,headUrl,telephone,username,signature,sex,location,backgroundUrl)
+        VALUES
+        (
+        #{id},
+        #{password},
+        #{headUrl},
+        #{telephone},
+        #{username},
+        #{signature},
+        #{sex},
+        #{location},
+        #{backgroundUrl}
+        )
+    </insert>
+    <!--删除一个用户-->
+    <delete id="deleteUserById" parameterType="string">
+        DELETE FROM tb_user
+        WHERE id=#{id}
+    </delete>
+    <!--通过id查找一个用户-->
+    <select id="searchUserById" parameterType="String" resultMap="userInfo">
+        SELECT * FROM tb_user
+        WHERE id=#{id}
+    </select>
+    <!--通过手机号找到用户id-->
+    <select id="searchIdByTel" parameterType="String" resultType="String">
+        SELECT id FROM tb_user
+        WHERE telephone=#{telephone}
+    </select>
+    <!--修改用户密码-->
+    <update id="UpdateUserPwd" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="password != null">
+                password=#{password},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户头像-->
+    <update id="UpdateUserHeadUrl" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="headUrl != null">
+                headUrl=#{headUrl},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户昵称-->
+    <update id="UpdateUserName" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户个性签名-->
+    <update id="UpdateUserSignature" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="signature != null">
+                signature=#{signature},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户性别-->
+    <update id="UpdateUserSex" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="sex != null">
+                sex=#{sex},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户地址-->
+    <update id="UpdateUserLocation" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="location != null">
+                location=#{location},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户生日-->
+    <update id="UpdateUserBirthday" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="birthday != null">
+                birthday=#{birthday},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--修改用户背景-->
+    <update id="UpdateUserBackgroundUrl" parameterType="mywechatem.demo.domain.User">
+        UPDATE tb_user
+        <set>
+            <if test="backgroundUrl != null">
+                backgroundUrl=#{backgroundUrl},
+            </if>
+        </set>
+        WHERE telephone=#{telephone}
+    </update>
+
+    <!--得到多个用户信息-->
+    <select id="searchUserByListString" resultMap="userInfo">
+        SELECT * FROM tb_user WHERE telephone IN
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

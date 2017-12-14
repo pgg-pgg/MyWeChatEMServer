@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mywechatem.demo.dao.MomentsDao">
+    <resultMap id="momentsInfo" type="mywechatem.demo.domain.Moments">
+    </resultMap>
+    <!--添加一条说说-->
+    <insert id="insertMoments" parameterType="mywechatem.demo.domain.Moments">
+        INSERT into tb_moments
+        (id,userId,text_content,image_content,time)
+        VALUES
+        (
+        #{id},
+        #{userId},
+        #{text_content},
+        #{image_content},
+        #{time}
+        )
+    </insert>
+    <!--删除一条说说-->
+    <delete id="deleteMoments" parameterType="string">
+        DELETE FROM tb_moments
+        WHERE id=#{id}
+    </delete>
+    <!--删除一个用户的所有说说-->
+    <delete id="deleteMomentsFromUser" parameterType="String" >
+        DELETE * FROM tb_moments
+        WHERE userId=#{userId}
+    </delete>
+    <!--得到所有说说-->
+    <select id="searchMoments" resultMap="momentsInfo">
+        SELECT * FROM tb_moments WHERE userId IN
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

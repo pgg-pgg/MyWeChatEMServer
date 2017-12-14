@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mywechatem.demo.dao.FriendManageDao">
+    <resultMap id="FriendsManageInfo" type="mywechatem.demo.domain.FriendsManage">
+    </resultMap>
+    <!--添加一个用户-->
+    <insert id="insertFriend" parameterType="mywechatem.demo.domain.FriendsManage">
+        INSERT into tb_friends_manage
+        (id,user_id,friend_id)
+        VALUES
+        (
+        #{id},
+        #{user_id},
+        #{friend_id};
+        )
+    </insert>
+    <!--删除一个用户-->
+    <delete id="deleteFriend" parameterType="mywechatem.demo.domain.FriendsManage">
+     DELETE FROM tb_friends_manage
+     WHERE user_id=#{user_id} and friend_id=#{friend_id}
+    </delete>
+
+</mapper>

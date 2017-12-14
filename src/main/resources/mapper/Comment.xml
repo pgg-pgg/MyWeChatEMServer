@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mywechatem.demo.dao.CommentDao">
+    <resultMap id="commentInfo" type="mywechatem.demo.domain.Comment">
+    </resultMap>
+    <!--添加一条评论-->
+    <insert id="insertComment" parameterType="mywechatem.demo.domain.Comment">
+        INSERT into tb_comment
+        (id,moments_id,content,userId,time,userName)
+        VALUES
+        (
+        #{id},
+        #{moments_id},
+        #{content},
+        #{userId},
+        #{time},
+        #{userName}
+        )
+    </insert>
+    <!--删除一条说说所属所有评论-->
+    <delete id="deleteComment" parameterType="string">
+        DELETE FROM tb_comment
+        WHERE moments_id=#{moments_id}
+    </delete>
+    <!--得到一条说说的所有评论-->
+    <select id="SearchComment" resultMap="commentInfo">
+        SELECT * FROM tb_comment WHERE moments_id = #{moments_id}
+    </select>
+
+    <!--得到所有好友说说的所有评论-->
+    <select id="searchAllComment" resultMap="commentInfo">
+        SELECT * FROM tb_comment WHERE moments_id IN
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
